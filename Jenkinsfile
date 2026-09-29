@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -36,13 +35,23 @@ pipeline {
 
         stage('Deploy with Ansible') {
             steps {
-                sh 'ansible-playbook -i /etc/ansible/hosts ansible/deploy.yml'
+                sh '''
+                    ansible-playbook \
+                    -i /etc/ansible/hosts \
+                    ansible/deploy.yml
+                '''
             }
         }
 
         stage('Verify') {
             steps {
-                sh 'ansible -i /etc/ansible/hosts app -m shell -a "curl -f http://127.0.0.1:8081"'
+                sh '''
+                    ansible \
+                    -i /etc/ansible/hosts \
+                    app \
+                    -m shell \
+                    -a "curl -f http://127.0.0.1:8081"
+                '''
             }
         }
     }
@@ -57,3 +66,4 @@ pipeline {
         }
     }
 }
+
