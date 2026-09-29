@@ -1,7 +1,9 @@
+
 pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -33,18 +35,14 @@ pipeline {
         }
 
         stage('Deploy with Ansible') {
-    steps {
-        sh 'ansible-playbook -i /etc/ansible/hosts ansible/deploy.yml'
-    }
-}
+            steps {
+                sh 'ansible-playbook -i /etc/ansible/hosts ansible/deploy.yml'
+            }
+        }
 
         stage('Verify') {
             steps {
-                sh '''
-                    ansible -i ansible/inventory app \
-                    -m shell \
-                    -a "curl -f http://127.0.0.1:8081"
-                '''
+                sh 'ansible -i /etc/ansible/hosts app -m shell -a "curl -f http://127.0.0.1:8081"'
             }
         }
     }
