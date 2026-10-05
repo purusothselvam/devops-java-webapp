@@ -14,7 +14,7 @@ public class HomeController {
                 =================================
 
                 Application: Online Shopping
-                Environment: Production
+                Environment: Productions
 
                 Version: 1.0
 
